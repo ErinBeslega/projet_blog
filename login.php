@@ -5,35 +5,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Page de connexion</title>
 </head>
 
 <body>
-    
-    <?php 
-    if (!isset($_GET["error"])){
-    }else{
-        echo "<script>document.querySelector('.erreur').innerHTML='Il y a une erreur';</script>";
-    }
-    include("connexion.php");
+
+    <?php
+        require "connexion.php";
     ?>
-    <form method="GET" action="traite_login.php">
-        <input type="text" name="login" id="" placeholder="login" require>
-        <?php
-            if (isset($_GET["erreur"]) && $_GET["erreur"]=="login"){
-                echo "mauvais login";
+    <form method="POST" action="traite_login.php">
+        <label for="login">
+            Votre login : <input type="text" name="login" placeholder="login" required="required">
+        </label>
+
+        <?php   // isset = is set ?   
+                //!isset = est ce que la valeur n'existe pas ?
+                // && = et
+            if ((isset($_GET["erreur"])) && ($_GET["erreur"]=="login")){
+                echo "login incorrect";
             }
         ?>
-        <input type="password" name="password" id="" placeholder="password" require>
+        <br>
+        <label for="mdp">
+            Votre mot de passe : <input type="password" name="password" placeholder="mot de passe" required="required">
+        </label>
+
         <?php
-            if (isset($_GET["erreur"]) && $_GET["erreur"]=="password"){
-                echo "mauvais mot de passe";
+            if (isset($_POST["erreur"]) && $_POST["erreur"]=="password"){
+                echo "mot de passe incorrect";
+                echo "<script>alert(\"Votre mot de passe semble incorect\")</script>";
             }
         ?>
-        <div class="erreur"></div>
-        <input type="submit" value="Envoyer">
+        <br>
+        <input type="submit" value="Connexion">
     </form>
-    
 
 
 </body>
