@@ -7,8 +7,10 @@
     <title>inscription</title>
 </head>
 <body>
- 
-    <form method="POST" action="traite_inscription.php">
+    <?php
+        include("connexion.php");
+    ?>
+    <form method="GET" action="traite_inscription.php">
         <input type="text" name="login" id="" placeholder="login">
         <input type="password" name="password" id="" placeholder="mot de passe">
         <input type="submit" value="S'inscrire">

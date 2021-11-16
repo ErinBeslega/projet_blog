@@ -8,14 +8,15 @@
 </head>
 <body>
 <?php 
-        $login=$_POST["login"];
-        $password=$_POST["password"];
+
+        include("connexion.php");
+        $login=$_GET["login"];
+        $password=$_GET["password"];
         $password=password_hash($password,PASSWORD_DEFAULT);
-        $link = new PDO('mysql:host=localhost;dbname=projet_blog', 'root', '', array
-        (PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-       
-        $sql="INSERT INTO `utilisateurs` (`id_user`,'login', `mot_de_passe`) VALUES ( NULL, '$login', '$password');";
-        // $v=$link->query($sql);
+        $sql= "INSERT INTO utilisateurs (login, mot_de_passe) VALUES ('".$login."', '".$password."')";
+        echo ('Vous êtes inscrit !');
+        $db->query($sql);
+        
     ?>
 </body>
 </html>

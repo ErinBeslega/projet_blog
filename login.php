@@ -15,10 +15,21 @@
     }else{
         echo "<script>document.querySelector('.erreur').innerHTML='Il y a une erreur';</script>";
     }
-        ?>
-    <form method="POST" action="traitelogin.php">
+    include("connexion.php");
+    ?>
+    <form method="GET" action="traite_login.php">
         <input type="text" name="login" id="" placeholder="login" require>
+        <?php
+            if (isset($_GET["erreur"]) && $_GET["erreur"]=="login"){
+                echo "mauvais login";
+            }
+        ?>
         <input type="password" name="password" id="" placeholder="password" require>
+        <?php
+            if (isset($_GET["erreur"]) && $_GET["erreur"]=="password"){
+                echo "mauvais mot de passe";
+            }
+        ?>
         <div class="erreur"></div>
         <input type="submit" value="Envoyer">
     </form>
