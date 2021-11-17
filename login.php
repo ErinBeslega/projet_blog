@@ -5,35 +5,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style_login.css">
+    <title>Page de connexion</title>
 </head>
 
 <body>
-    
-    <?php 
-    if (!isset($_GET["error"])){
-    }else{
-        echo "<script>document.querySelector('.erreur').innerHTML='Il y a une erreur';</script>";
-    }
-    include("connexion.php");
+
+    <?php
+        require "connexion.php";
     ?>
-    <form method="GET" action="traite_login.php">
-        <input type="text" name="login" id="" placeholder="login" require>
-        <?php
-            if (isset($_GET["erreur"]) && $_GET["erreur"]=="login"){
-                echo "mauvais login";
-            }
-        ?>
-        <input type="password" name="password" id="" placeholder="password" require>
-        <?php
-            if (isset($_GET["erreur"]) && $_GET["erreur"]=="password"){
-                echo "mauvais mot de passe";
-            }
-        ?>
-        <div class="erreur"></div>
-        <input type="submit" value="Envoyer">
-    </form>
     
+    <form method="POST" action="traite_login.php">
+    <h1>Connectez-vous</h1>
+        <label for="login">
+            <input type="text" name="login" placeholder="Login" required="required">
+        </label>
+
+        <?php   // isset = is set ?   
+                //!isset = est ce que la valeur n'existe pas ?
+                // && = et
+            if ((isset($_GET["erreur"])) && ($_GET["erreur"]=="login")){
+                echo "login incorrect";
+            }
+        ?>
+        <br>
+        <label for="mdp">
+            <input type="password" name="password" placeholder="Mot de passe" required="required">
+        </label>
+
+        <?php
+            if (isset($_POST["erreur"]) && $_POST["erreur"]=="password"){
+                echo "mot de passe incorrect";
+                echo "<script>alert(\"Votre mot de passe semble incorect\")</script>";
+            }
+        ?>
+        <br>
+        <div class="disp">
+            <input class="connect"type="submit" value="Connexion">
+        </div>
+        
+    </form>
 
 
 </body>

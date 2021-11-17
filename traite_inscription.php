@@ -7,15 +7,16 @@
     <title>traite_inscription</title>
 </head>
 <body>
-<?php 
+<?php
+    $login=$_POST["login"];
 
-        include("connexion.php");
-        $login=$_GET["login"];
-        $password=$_GET["password"];
-        $password=password_hash($password,PASSWORD_DEFAULT);
-        $sql= "INSERT INTO utilisateurs (login, mot_de_passe) VALUES ('".$login."', '".$password."')";
-        echo ('Vous êtes inscrit !');
-        $db->query($sql);
+    include("connexion.php");
+
+    $password=$_POST["password"];
+    $password=password_hash($password,PASSWORD_DEFAULT);
+    $sql= "INSERT INTO utilisateurs (login, mot_de_passe) VALUES ('"$login."', '".$password."')";
+    echo ('Vous êtes inscrit !');
+    $db->query($sql);
         
     ?>
 </body>
