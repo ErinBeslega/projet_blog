@@ -41,7 +41,7 @@
         ?>
         <br>
         <div class="disp">
-            <input class="connect"type="submit" value="Connexion">
+            <input class="connect" type="submit" value="Connexion">
         </div>
         
     </form>
