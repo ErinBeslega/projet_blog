@@ -25,8 +25,6 @@
     $verif=$req_count->rowCount(); //verif = 
     
     // echo $req_count
-    // ouais j pense
-    // mais erreur c'est $_POST[erreur] ? oulaaaaaaaaa
 
     $data_verif=$req_count->fetch(PDO::FETCH_ASSOC);
 
@@ -35,9 +33,10 @@
             session_start();
             $_SESSION["login"]=$data_verif["login"];
             echo "<script>alert(\"Vous êtes connecté\")</script>";
-            // header('Location: monblog.php'); //page d'acceuil du blog pour l'utilisateur
+            header('Location: monblog.php'); //page d'acceuil du blog pour l'utilisateur
         }else{
             header('Location: login.php?error=mdp'); //page login avec erreur de connexion
+            echo "<script>alert(\"Mdp incorrect !\")</script>";
             }
     }else{
         header('Location: login.php?error=login');

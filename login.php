@@ -20,7 +20,7 @@
         <label for="login">
             <input type="text" name="login" placeholder="Login" required="required">
         </label>
-
+        
         <?php   // isset = is set ?   
                 //!isset = est ce que la valeur n'existe pas ?
                 // && = et
