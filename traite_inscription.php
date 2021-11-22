@@ -14,9 +14,9 @@
 
     $password=$_POST["password"];
     $password=password_hash($password,PASSWORD_DEFAULT);
-    $sql= "INSERT INTO utilisateurs (login, mot_de_passe) VALUES ('"$login."', '".$password."')";
-    echo ('Vous êtes inscrit !');
+    $sql= "INSERT INTO utilisateurs (login, mot_de_passe) VALUES ('".$login."', '".$password."')";
     $db->query($sql);
+    header('Location: login.php');
         
     ?>
 </body>
