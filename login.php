@@ -42,8 +42,10 @@
         <br>
         <div class="disp">
             <input class="connect" type="submit" value="Connexion">
+            <a href="inscription.php" class="connect">Inscription</a>
+            <button href="monblog.php">Visiteur</button>
         </div>
-        
+
     </form>
 
 

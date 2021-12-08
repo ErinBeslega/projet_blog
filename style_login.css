@@ -59,6 +59,7 @@ input::placeholder{
     color: white;
     background-color: rgb(60, 182, 60);
     transition: ease-in-out 300ms;
+    text-decoration: none;
 }
 
 .connect:hover{

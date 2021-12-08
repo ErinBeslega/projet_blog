@@ -12,9 +12,12 @@
         include("connexion.php");
     ?>
     <form method="POST" action="traite_inscription.php">
+    <h1>Inscription</h1>
         <input type="text" name="login" id="" placeholder="login">
         <input type="password" name="password" id="" placeholder="mot de passe">
         <input type="submit" value="S'inscrire">
+        <button href="connexion.php">Se connecter</button>
+        <button href="monblog.php">Visiteur</button>
     </form>
    
 </body>
