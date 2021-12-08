@@ -9,25 +9,68 @@
 </head>
 
 <body>
-
+    <header>
     <?php 
-        require "connexion.php";
+        session_start();
+        // Si je suis connecté 
+        if (isset($_SESSION["login"])){
+            echo "<button value='deconnexion'>DECONNEXION</button><br>
+            <a href='monblog.php'>Accueil</a><br>
+            <a href='monblog_archive.php'>Archives</a><br>";
+        };
+
+        // A FAIRE
+        if(isset($_POST['deconnexion'])){
+            session_destroy();
+            $_SESSION=array();
+            header("Location: login.php");
+        }
+
+         // Si je suis visiteur
+         if (isset($_SESSION["login"]) == ""){
+            echo "<a href='monblog.php'>Accueil</a><br>
+            <a href='monblog_archive.php'>Archives</a><br>
+            <a href='inscription.php'>INSCRIPTION</a><br>
+            <a href='login.php'>CONNEXION</a>";
+        };
+
+         // Si je suis admin
+         if (isset($_SESSION["login"]) && $_SESSION["login"] == "tata"){
+            echo "<a href='createur.php'>Createur</a><br>";
+        };
     ?>
 
-    <header>
-        <li><a href="monblog.php">Accueil</a></li>
-        <li><a href="monblog_archive.php">Archives</a></li>
-
-        <a href="inscription.php">INSCRIPTION</a>
-        <a href="login.php">CONNEXION</a>
     </header>
 
     <!-- Articles -->
     <main id="billet">
         <h1>Bienvenu sur le site !</h1>
     </main>
-    
+    <?php 
+    include ("connexion.php");
+    $requete="SELECT * FROM billets, commentaires WHERE billets.id_billet = commentaires.ex_billets ORDER BY id_billet DESC LIMIT 3";
+    $stmt=$db->query($requete);
+    $result=$stmt->fetchall(PDO::FETCH_ASSOC);
 
+    // var_dump($result);
+
+    // On affiche les information stocker de chaque user
+    foreach($result as $article){
+        echo "<div id='billet".$article["id_billet"]."' class='billets''>
+        <h1>Article n° ".$article["id_billet"]."</h1>
+        <br>
+        <p> Date de publication : ".$article["date_b"]."</p>
+        <br>
+        <p>".$article["contenu_b"]."</p>
+        <br>
+        <a href='./articletest.php?id_billet=".$article["id_billet"]."'>Afficher l'article</a>
+        <div>";
+    }  
+?>
+
+    <!-- <main id="billet">
+        <h1>Bienvenu sur le site !</h1>
+    </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -65,10 +108,7 @@
     </script>
     <label for="format">json</label>
     <input type="checkbox" name="format" id="format" value="json">
-    <div id="info"></div>
-
-
-
+    <div id="info"></div> -->
 </body>
 
 </html>
