@@ -9,7 +9,7 @@
 </head>
 <body>
     <?php
-        include("connexion.php");
+        require "connexion.php";
     ?>
     <form method="POST" action="traite_inscription.php">
         <input type="text" name="login" id="" placeholder="login">

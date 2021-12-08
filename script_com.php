@@ -1,7 +1,7 @@
 
 <?php
 
-require "connexion.php"
+require "connexion.php";
 
 if (isset($_POST["quelque chose"])){
 $requete = " SELECT * from commentaire WHERE id= :version";
