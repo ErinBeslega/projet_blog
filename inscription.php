@@ -17,7 +17,7 @@
         <input type="password" name="password" id="" placeholder="mot de passe">
         <input type="submit" value="S'inscrire">
         <button href="connexion.php">Se connecter</button>
-        <button href="monblog.php">Visiteur</button>
+        <a href="monblog.php">Visiteur</a>
     </form>
    
 </body>
