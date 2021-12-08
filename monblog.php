@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon blog / Accueil</title>
 </head>
+
 <body>
 
     <?php 
@@ -19,35 +21,54 @@
         <a href="inscription.php">INSCRIPTION</a>
         <a href="login.php">CONNEXION</a>
     </header>
-    
+
     <!-- Articles -->
-    <main id="billet"> 
-    <h1>Bienvenu sur le site !</h1>
+    <main id="billet">
+        <h1>Bienvenu sur le site !</h1>
     </main>
+    
 
-    <?php 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#button").click(function (e) {
+                e.preventDefault();
+                $.getJSON('affiche_version.php', {
+                        version: $('#select option:selected').attr('value')
+                    },
+                    function (donnees) {
 
-    // Requête pour afficher le heptamarion
-    $requete="SELECT * FROM billets ORDER BY id_billet DESC LIMIT 3";
+                        var htmlJSON = JSON.stringify(donnees, undefined, 4)
+                        var html = `
+                              <h1>Version ${donnees.id} de <i>L'Heptaméron</i> de Marguerite de Navarre (${donnees.code})</h1>
+                              <p>Type : ${donnees.type}<br>Version publiée en ${donnees.year}</p>
+                              <p>Le titre de cette version est <i>${donnees.title}</i></p>
+                              <p>Localisation de l'exemplaire numérisé : ${donnees.location}</p>
+                              <p>Publié par ${donnees.publisher} à ${donnees.publisherCity}</p>
+                              <p>Édité par ${donnees.editor} </p>
+                              <iframe src="${donnees.url}" width="500" height="500"></iframe>
+                              <br>
+                              <p>Droits attribués ${donnees.rights}</p>`
 
-    // J'envoie la requête
-    $stmt=$db->query($requete);
-    // Je recupère les information dans la variable version
-    $result=$stmt->fetchall(PDO::FETCH_ASSOC);
+                        if (!$('#info').is(':empty')) {
+                            $('#info').empty()
+                        }
+                        if ($('#format').is(':checked')) {
+                            $('#info').append('<br><pre><code>' + htmlJSON + '</code></pre>')
+                        } else {
+                            $('#info').append(html)
+                        }
 
-    // Test : On regarde ce qu'il y a dans la variable result
-    // var_dump($result);
+                    });
+            });
+        });
+    </script>
+    <label for="format">json</label>
+    <input type="checkbox" name="format" id="format" value="json">
+    <div id="info"></div>
 
-    // On affiche les information stocker de chaque user
-    foreach($result as $article){
-        echo "<div class='billets''><h1>Article n° ".$article["id_billet"]."</h1><br>";
-        echo "<p> Date de publication : ".$article["date_b"]."</p><br>";
-        echo "<p> Date de publication : ".$article["contenu_b"]."</p><br>
-        <button type='button' class='button_affiche_com'>Commentaires</button>
-        <a  href='commentaire.php' type='button' class='button_ajout_com'>Ajouter un commentaire</a><div>";
-    }
 
-?>
 
 </body>
+
 </html>
