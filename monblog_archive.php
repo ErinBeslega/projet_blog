@@ -42,7 +42,7 @@
         <br>
         <p>".$article["contenu_b"]."</p>
         <br>
-        <a href='./articletest.php?id_billet=".$article["id_billet"]."'>Le lien</a>
+        <a href='articletest.php?id_billet=".$article["id_billet"]."'>Le lien</a>
         <div>";
 
         // code pour afficher les com

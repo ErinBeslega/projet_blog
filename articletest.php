@@ -29,27 +29,56 @@ require "connexion.php";
     <?php 
 
         $id_billet = $_GET["id_billet"];
-        $request = "SELECT * from billets WHERE id_billet=$id_billet";
+        $request = "SELECT * from billets WHERE id_billet=:id_billet";
         $requestCom = "SELECT * FROM commentaires WHERE ex_billets=$id_billet";
         $stmt = $db -> prepare($request);
+        $stmt-> bindValue(':id_billet', $id_billet, PDO::PARAM_INT);
         $stmtCom = $db -> prepare($requestCom);
         $stmt -> execute();
         $stmtCom -> execute();
         //AFFICHER CONTENU DU BILLET
         $result=$stmt->fetch(PDO::FETCH_ASSOC);
-        $resultCom=$stmtCom->fetch(PDO::FETCH_ASSOC);
 
         // ex_billets = id_billet AND 
         echo "<h1>Article n°".$id_billet."</h1>";
         echo "<p>".$result["contenu_b"]."</p>";
 
-          echo "<div class='com'>
-          <h1>".$resultCom['ex_utilisateurs']."</h1>
-          <p> Date de publication".$resultCom['date_c']."</p>
-          <p>".$resultCom['contenu_c']."</p></div>";
+        //afficheCom
+        if (!isset($result)) {
+            echo "<p>Pas encore de commentaire, soyez le premier</p>";
+        }else{
+            foreach ($resultCom as $result){
+                echo "<div class='com'>
+                <h2>".$resultCom['ex_utilisateurs']."</h2>
+                <h4>".$resultCom['titre_b']."</h4>
+                <p> Date de publication : ".$resultCom['date_c']."</p>
+                <p>".$resultCom['contenu_c']."</p></div>";
+            }
+        }
+        $resultCom=$stmtCom->fetch(PDO::FETCH_ASSOC);
+
+
+        function afficheCommentaire($id){
+            $db = connect();
+            $req="SELECT * FROM commentaire, utilisateur WHERE ext_billet=? AND ext_utilisateur=id ORDER BY id_com DESC";
+            $stmt=$db->prepare($req);
+            $stmt -> bindValue(1, $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $result=$stmt->fetchall(PDO::FETCH_ASSOC);
+        
+            if($result != NULL){
+                echo "<button id='affiche_com'>Afficher les commentaires</button><ul class='commentaire'>";
+                foreach($result as $row){
+                    echo "<li>Date du commentaire : {$row["date_com"]}<br><div>{$row["contenu_com"]}</div>Auteur : {$row["pseudo"]}<br>
+                    </li>";
+                } 
+                echo "</ul>";
+            }
+        }
+        
     ?>
 
-    <form action="traite_commentaire.php" method="post">
+    <form action="" method="post">
         <strong>Ajouter un commentaire</strong><br>
         <label for="login">Pseudo :</label><br>
         <input type="text" name="login" id="login">
