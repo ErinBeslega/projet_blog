@@ -35,7 +35,7 @@
     $result=$stmt->fetchall(PDO::FETCH_ASSOC);
 
 // Test 1
-if ( isset($_GET['submit']) ){
+if (isset($_GET['submit']) ){
     echo "<div class='billets''><h1>Article n° ".$_GET['id_billet']."</h1><br>
          <p> Date de publication : ".$_GET['date_b']."</p><br>
          <p> ".$_GET['contenu_b']."</p><br>

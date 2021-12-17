@@ -12,30 +12,30 @@
     <header>
     <?php 
         session_start();
-        // Si je suis connecté 
-        if (isset($_SESSION["login"])){
-            echo "<button value='deconnexion'>DECONNEXION</button><br>
-            <a href='monblog.php'>Accueil</a><br>
-            <a href='monblog_archive.php'>Archives</a><br>";
-        };
-
-        // A FAIRE
-        if(isset($_POST['deconnexion'])){
+         // Se déconnecter
+         if(isset($_POST['deconnexion'])){
             session_destroy();
             $_SESSION=array();
             header("Location: login.php");
-        }
+        };
+
+        // Si je suis connecté 
+        if (isset($_SESSION["login"])){
+            echo "<a href='deconnexion.php'>Déconnexion</a><br>
+            <a href='monblog.php'>Accueil</a><br>
+            <a href='monblog_archive.php'>Archives</a><br>";
+        };
 
          // Si je suis visiteur
          if (isset($_SESSION["login"]) == ""){
             echo "<a href='monblog.php'>Accueil</a><br>
             <a href='monblog_archive.php'>Archives</a><br>
-            <a href='inscription.php'>INSCRIPTION</a><br>
-            <a href='login.php'>CONNEXION</a>";
+            <a href='inscription.php'>Inscription</a><br>
+            <a href='login.php'>Connexion</a>";
         };
 
-         // Si je suis admin
-         if (isset($_SESSION["login"]) && $_SESSION["login"] == "tata"){
+         // Si je suis admin remplacer dans la bbd login = 1
+         if (isset($_SESSION) && $_SESSION['login'] == "tata"){
             echo "<a href='createur.php'>Createur</a><br>";
         };
     ?>
@@ -48,7 +48,7 @@
     </main>
     <?php 
     include ("connexion.php");
-    $requete="SELECT * FROM billets, commentaires WHERE billets.id_billet = commentaires.ex_billets ORDER BY id_billet DESC LIMIT 3";
+    $requete='SELECT * FROM billets, commentaires WHERE billets.id_billet = commentaires.ex_billets ORDER BY id_billet DESC LIMIT 3';
     $stmt=$db->query($requete);
     $result=$stmt->fetchall(PDO::FETCH_ASSOC);
 
