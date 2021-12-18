@@ -26,6 +26,38 @@ require "connexion.php";
 
 <body>
 
+<header>
+<?php
+       session_start();
+       // Se déconnecter
+       if(isset($_POST['deconnexion'])){
+          session_destroy();
+          $_SESSION=array();
+          header("Location: login.php");
+      };
+
+      // Si je suis connecté 
+      if (isset($_SESSION["login"])){
+          echo "<a href='deconnexion.php'>Déconnexion</a><br>
+          <a href='monblog.php'>Accueil</a><br>
+          <a href='monblog_archive.php'>Archives</a><br>";
+      };
+
+       // Si je suis visiteur
+       if (isset($_SESSION["login"]) == ""){
+          echo "<a href='monblog.php'>Accueil</a><br>
+          <a href='monblog_archive.php'>Archives</a><br>
+          <a href='inscription.php'>Inscription</a><br>
+          <a href='login.php'>Connexion</a>";
+      };
+
+       // Si je suis admin tata
+       if (isset($_SESSION) && $_SESSION['login'] == "tata"){
+          echo "<a href='createur.php'>Createur</a><br>";
+      };
+?>
+</header>
+
     <?php 
 
         $id_billet = $_GET["id_billet"];
@@ -47,12 +79,12 @@ require "connexion.php";
         if (!isset($result)) {
             echo "<p>Pas encore de commentaire, soyez le premier</p>";
         }else{
-            foreach ($resultCom as $result){
+            foreach ($resultCom as $com){
                 echo "<div class='com'>
-                <h2>".$resultCom['ex_utilisateurs']."</h2>
-                <h4>".$resultCom['titre_b']."</h4>
-                <p> Date de publication : ".$resultCom['date_c']."</p>
-                <p>".$resultCom['contenu_c']."</p></div>";
+                <h2>".$com['ex_utilisateurs']."</h2>
+                <h4>".$com['titre_b']."</h4>
+                <p> Date de publication : ".$com['date_c']."</p>
+                <p>".$com['contenu_c']."</p></div>";
             }
         }
         $resultCom=$stmtCom->fetch(PDO::FETCH_ASSOC);
@@ -77,17 +109,24 @@ require "connexion.php";
         }
         
     ?>
+<?php
+      // Poster un commentaire si je suis connecté 
+      if (isset($_SESSION["login"])){
+          echo " <form action='traite_commentaire.php' method='POST'>
+                    <strong>Ajouter un commentaire</strong><br>
+                    <label for='login'>Pseudo :</label><br>
+                    <input type='text' name='login' id='login'>
+                    <br><br>
+                    <label for='date_c'>Date de post :</label><br>
+                    <input type='date' name='date_c'>
+                    <br><br>
+                    <label for='contenu_c'>Commentaire :</label><br>
+                    <textarea name='contenu_c' id='ex_billets' cols='30' rows='8' placeholder='Qu'avez vous à dire ?'></textarea><br>
+                    <button type='submit'>Ajouter un commentaire </button>
+                </form>";
+      };
 
-    <form action="" method="post">
-        <strong>Ajouter un commentaire</strong><br>
-        <label for="login">Pseudo :</label><br>
-        <input type="text" name="login" id="login">
-        <br><br>
-        <label for="commentaire">Commentaire :</label><br>
-        <textarea name="ex_billets" id="ex_billets" cols="30" rows="8" placeholder="Qu'avez vous à dire ?"></textarea><br>
-        <button type="submit">Envoyer</button>
-    </form>
-
+?>
 
 </body>
 

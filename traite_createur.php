@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Traite commentaire</title>
+    <title>Traite créateur</title>
 </head>
 <body>
 <?php
 // Envoyer un nouvel article dans la bdd
-    $login=$_POST["login"];
+    $contenu_b=$_POST["contenu_b"];
     include("connexion.php");
-    $date_c=$_POST["date_c"];
-    $contenu_c=$_POST["contenu_c"];
-    $sql= "INSERT INTO commentaires (login, contenu_c, date_c) VALUES ('".$login."', '".$contenu_c."', '".$date_c."')";
+    $date_b=$_POST["date_b"];
+    $sql= "INSERT INTO billets (contenu_b, date_b) VALUES ('".$contenu_b."', '".$date_b."')";
     $db->query($sql);
-    header('Location: articletest.php');
+    header('Location: createur.php');
     ?>
 </body>
 </html>
