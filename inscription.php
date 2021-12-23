@@ -11,11 +11,13 @@
     <?php
         require "connexion.php";
     ?>
+    
     <form method="POST" action="traite_inscription.php">
     <h1>Inscription</h1>
-        <input type="text" name="login" id="" placeholder="login">
-        <input type="password" name="password" id="" placeholder="mot de passe">
+        <input type="text" name="login" id="" placeholder="login" required="required">
+        <input type="password" name="password" id="" placeholder="mot de passe" required="required">
         <input type="submit" value="S'inscrire">
+        <!-- il sert à quoi le href="connexion.php" ?? -->
         <button href="connexion.php">Se connecter</button>
         <a href="monblog.php">Visiteur</a>
     </form>

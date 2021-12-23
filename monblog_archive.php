@@ -15,11 +15,35 @@
     ?>
 
     <header>
-        <li><a href="monblog.php">Accueil</a></li>
-        <li><a href="monblog_archive.php">Archives</a></li>
+    <?php
+       session_start();
+       // Se déconnecter
+       if(isset($_POST['deconnexion'])){
+          session_destroy();
+          $_SESSION=array();
+          header("Location: login.php");
+      };
 
-        <a href="inscription.php">INSCRIPTION</a>
-        <a href="login.php">CONNEXION</a>
+      // Si je suis connecté 
+      if (isset($_SESSION["login"])){
+          echo "<a href='deconnexion.php'>Déconnexion</a><br>
+          <a href='monblog.php'>Accueil</a><br>
+          <a href='monblog_archive.php'>Archives</a><br>";
+      };
+
+       // Si je suis visiteur
+       if (isset($_SESSION["login"]) == ""){
+          echo "<a href='monblog.php'>Accueil</a><br>
+          <a href='monblog_archive.php'>Archives</a><br>
+          <a href='inscription.php'>Inscription</a><br>
+          <a href='login.php'>Connexion</a>";
+      };
+
+       // Si je suis admin tata
+       if (isset($_SESSION) && $_SESSION['login'] == "tata"){
+          echo "<a href='createur.php'>Createur</a><br>";
+      };
+?>
     </header>
 
     <!-- Articles -->
@@ -36,7 +60,7 @@
 
     foreach($result as $article){
         echo "<div id='billet$compteur' class='billets''>
-        <h1>Article n° ".$article["id_billet"]."</h1>
+        <h1>Article n° ".$article["id_billet"]."</h1><h1>".$article["titre_b"]."</h1>
         <br>
         <p> Date de publication : ".$article["date_b"]."</p>
         <br>
@@ -44,15 +68,6 @@
         <br>
         <a href='articletest.php?id_billet=".$article["id_billet"]."'>Le lien</a>
         <div>";
-
-        // code pour afficher les com
-        // foreach($commentaire as $com){
-        //     echo "<div class='com'>
-        //     <h1>".$com['ex_utilisateurs']."</h1><br>
-        //     <p> Date de publication".$com['date_c']."</p>
-        //     <p>".$com['contenu_c']."</p>
-        //     </div>";
-        // };
     }  
 ?>
 

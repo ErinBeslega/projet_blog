@@ -11,23 +11,22 @@ require "connexion.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Article</title>
     <style>
-
-        .com{
-            border:2px solid black;
-            width:50%;
+        .com {
+            border: 2px solid black;
+            width: 50%;
         }
 
-        .com h1,p{
+        .com h1,
+        p {
             margin-right: 10px;
         }
-    
     </style>
 </head>
 
 <body>
 
-<header>
-<?php
+    <header>
+        <?php
        session_start();
        // Se déconnecter
        if(isset($_POST['deconnexion'])){
@@ -52,17 +51,17 @@ require "connexion.php";
       };
 
        // Si je suis admin tata
-       if (isset($_SESSION) && $_SESSION['login'] == "tata"){
+       if (isset($_SESSION) && $_SESSION['login'] == "toto"){
           echo "<a href='createur.php'>Createur</a><br>";
       };
 ?>
-</header>
+    </header>
 
-    <?php 
-
+    <?php
+    
         $id_billet = $_GET["id_billet"];
         $request = "SELECT * from billets WHERE id_billet=:id_billet";
-        $requestCom = "SELECT * FROM commentaires WHERE ex_billets=$id_billet";
+        $requestCom = "SELECT * FROM commentaires, utilisateurs WHERE ex_billets=$id_billet AND ex_utilisateurs=id_user";
         $stmt = $db -> prepare($request);
         $stmt-> bindValue(':id_billet', $id_billet, PDO::PARAM_INT);
         $stmtCom = $db -> prepare($requestCom);
@@ -70,64 +69,55 @@ require "connexion.php";
         $stmtCom -> execute();
         //AFFICHER CONTENU DU BILLET
         $result=$stmt->fetch(PDO::FETCH_ASSOC);
-
-        // ex_billets = id_billet AND 
-        echo "<h1>Article n°".$id_billet."</h1>";
-        echo "<p>".$result["contenu_b"]."</p>";
-
-        //afficheCom
-        if (!isset($result)) {
-            echo "<p>Pas encore de commentaire, soyez le premier</p>";
-        }else{
-            foreach ($resultCom as $com){
-                echo "<div class='com'>
-                <h2>".$com['ex_utilisateurs']."</h2>
-                <h4>".$com['titre_b']."</h4>
-                <p> Date de publication : ".$com['date_c']."</p>
-                <p>".$com['contenu_c']."</p></div>";
-            }
-        }
-        $resultCom=$stmtCom->fetch(PDO::FETCH_ASSOC);
+        // $resultCom=$stmtCom->fetch(PDO::FETCH_ASSOC);
 
 
-        function afficheCommentaire($id){
-            $db = connect();
-            $req="SELECT * FROM commentaire, utilisateur WHERE ext_billet=? AND ext_utilisateur=id ORDER BY id_com DESC";
-            $stmt=$db->prepare($req);
-            $stmt -> bindValue(1, $id, PDO::PARAM_INT);
-            $stmt->execute();
-            $result=$stmt->fetchall(PDO::FETCH_ASSOC);
-        
-            if($result != NULL){
-                echo "<button id='affiche_com'>Afficher les commentaires</button><ul class='commentaire'>";
-                foreach($result as $row){
-                    echo "<li>Date du commentaire : {$row["date_com"]}<br><div>{$row["contenu_com"]}</div>Auteur : {$row["pseudo"]}<br>
+        echo "<h1>Article n°{$id_billet}</h1>
+              <h1>{$result["titre_b"]}</h1>
+              <p>{$result["contenu_b"]}</p>";
+
+
+
+            echo "<h3>Commentaires :</h3><ul class='commentaire'>";
+                while ($resultCom=$stmtCom->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<li>Date du commentaire : ".$resultCom["date_c"]."<br>
+                    <div>".$resultCom["contenu_c"]."</div>
+                    Auteur : ".$resultCom["login"]."
                     </li>";
-                } 
-                echo "</ul>";
-            }
-        }
+                }
+                
+            echo "</ul>";
         
-    ?>
-<?php
+
       // Poster un commentaire si je suis connecté 
       if (isset($_SESSION["login"])){
-          echo " <form action='traite_commentaire.php' method='POST'>
+          $_SESSION["id_billet"] = $id_billet;
+          echo "<button id='nouv_com'>Ajouter un commmentaire</button>";
+          echo "<form action='traite_commentaire.php' method='POST' id='com'>
                     <strong>Ajouter un commentaire</strong><br>
-                    <label for='login'>Pseudo :</label><br>
-                    <input type='text' name='login' id='login'>
                     <br><br>
-                    <label for='date_c'>Date de post :</label><br>
-                    <input type='date' name='date_c'>
+                    <label for='date'>Date de post :</label><br>
+                    <input type='date' name='date'>
                     <br><br>
-                    <label for='contenu_c'>Commentaire :</label><br>
-                    <textarea name='contenu_c' id='ex_billets' cols='30' rows='8' placeholder='Qu'avez vous à dire ?'></textarea><br>
+                    <label for='contenu'>Commentaire :</label><br>
+                    <textarea name='contenu' id='ex_billets' cols='30' rows='8' placeholder=\"Qu'avez vous à dire ?\"></textarea><br>
                     <button type='submit'>Ajouter un commentaire </button>
                 </form>";
       };
 
 ?>
 
+<script>
+document.getElementById('com').style.display = 'none';
+
+document.getElementById('nouv_com').addEventListener("click", ()=>{
+    if (document.getElementById('com').style.display == 'none'){
+        document.getElementById('com').style.display = 'block';
+    } else {
+        document.getElementById('com').style.display = 'none';
+    }
+})
+</script>
 </body>
 
 </html>

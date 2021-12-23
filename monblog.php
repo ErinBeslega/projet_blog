@@ -58,7 +58,7 @@
     foreach($result as $article){
         echo "<div id='billet".$article["id_billet"]."' class='billets''>
         <h1>Article n° ".$article["id_billet"]."</h1>
-        <br>
+        <h1>".$article["titre_b"]."</h1>
         <p> Date de publication : ".$article["date_b"]."</p>
         <br>
         <p>".$article["contenu_b"]."</p>

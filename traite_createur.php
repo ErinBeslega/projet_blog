@@ -12,7 +12,7 @@
     $contenu_b=$_POST["contenu_b"];
     include("connexion.php");
     $date_b=$_POST["date_b"];
-    $sql= "INSERT INTO billets (contenu_b, date_b) VALUES ('".$contenu_b."', '".$date_b."')";
+    $sql= "INSERT INTO billets (contenu_b, date_b) VALUES ('$contenu_b', '$date_b')";
     $db->query($sql);
     header('Location: createur.php');
     ?>

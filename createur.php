@@ -9,10 +9,37 @@
 </head>
 
 <body>
-    <header>
-    <a href='monblog.php'>Accueil</a><br>
-            <a href='monblog_archive.php'>Archives</a><br>
-            <a href='createur.php'>Createur</a><br>
+
+<header>
+        <?php
+       session_start();
+       // Se déconnecter
+       if(isset($_POST['deconnexion'])){
+          session_destroy();
+          $_SESSION=array();
+          header("Location: login.php");
+      };
+
+      // Si je suis connecté 
+      if (isset($_SESSION["login"])){
+          echo "<a href='deconnexion.php'>Déconnexion</a><br>
+          <a href='monblog.php'>Accueil</a><br>
+          <a href='monblog_archive.php'>Archives</a><br>";
+      };
+
+       // Si je suis visiteur
+       if (isset($_SESSION["login"]) == ""){
+          echo "<a href='monblog.php'>Accueil</a><br>
+          <a href='monblog_archive.php'>Archives</a><br>
+          <a href='inscription.php'>Inscription</a><br>
+          <a href='login.php'>Connexion</a>";
+      };
+
+       // Si je suis admin toto
+       if (isset($_SESSION) && $_SESSION['login'] == "toto"){
+          echo "<a href='createur.php'>Createur</a><br>";
+      };
+?>
     </header>
 
     <!-- Espace admin : Ajouter un article  -->

@@ -8,16 +8,22 @@
 </head>
 <body>
 <?php
-    $login=$_POST["login"];
-
+    $login_oui=$_POST["login"];
     include("connexion.php");
 
-    $password=$_POST["password"];
-    $password=password_hash($password,PASSWORD_DEFAULT);
-    $sql= "INSERT INTO utilisateurs (login, mot_de_passe) VALUES ('".$login."', '".$password."')";
-    $db->query($sql);
-    header('Location: login.php');
-        
+    $requete = 'SELECT * FROM utilisateurs WHERE login=$login_oui'; 
+    $stmt = $db_oui->prepare($requete);
+    $stmt -> execute();
+    if($stmt -> rowcount()==1){
+        header('Location: login.php');
+    } else {
+        $password=$_POST["password"];
+        $password=password_hash($password,PASSWORD_DEFAULT);
+        $sql= "INSERT INTO utilisateurs (login, mot_de_passe) VALUES ('$login', '$password')";
+        $db->query($sql);
+        header('Location: login.php');
+    }
+    
     ?>
 </body>
 </html>
