@@ -35,7 +35,7 @@
         };
 
          // Si je suis admin remplacer dans la bbd login = 1
-         if (isset($_SESSION) && $_SESSION['login'] == "tata"){
+         if (isset($_SESSION) && $_SESSION['login'] == "toto"){
             echo "<a href='createur.php'>Createur</a><br>";
         };
     ?>

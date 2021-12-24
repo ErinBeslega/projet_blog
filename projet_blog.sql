@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : lun. 22 nov. 2021 à 11:14
--- Version du serveur :  10.4.17-MariaDB
--- Version de PHP : 8.0.2
+-- Hôte : localhost
+-- Généré le : ven. 24 déc. 2021 à 18:21
+-- Version du serveur :  10.4.18-MariaDB
+-- Version de PHP : 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,19 +30,20 @@ SET time_zone = "+00:00";
 CREATE TABLE `billets` (
   `id_billet` int(11) NOT NULL,
   `date_b` date NOT NULL,
-  `contenu_b` text NOT NULL
+  `contenu_b` text NOT NULL,
+  `titre_b` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `billets`
 --
 
-INSERT INTO `billets` (`id_billet`, `date_b`, `contenu_b`) VALUES
-(1, '2021-11-22', 'Article 1 \r\nTitre \r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\r\n'),
-(2, '2021-12-22', 'Article 2\r\nTitre \r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\r\n'),
-(3, '2022-01-22', 'Article 3\r\nTitre \r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\r\n'),
-(4, '2022-02-22', 'Article 5\r\nTitre \r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\r\n'),
-(5, '2022-02-22', 'Article 5\r\nTitre \r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\r\n');
+INSERT INTO `billets` (`id_billet`, `date_b`, `contenu_b`, `titre_b`) VALUES
+(1, '2021-11-22', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\r\n', 'La news de Noël'),
+(2, '2021-12-22', 'Article 2\r\nTitre \r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\r\n', 'Bons plans pour vos familles'),
+(3, '2022-01-22', 'Article 3\r\nTitre \r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\r\n', 'Les meilleurs resto de Paris'),
+(4, '2022-02-22', 'Article 5\r\nTitre \r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\r\n', 'Le Noël des développeurs'),
+(5, '2022-02-22', 'Article 5\r\nTitre \r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\r\n', 'Top 5 d\'idées cadeau pour un/une développeur/se');
 
 -- --------------------------------------------------------
 
@@ -85,9 +86,10 @@ CREATE TABLE `utilisateurs` (
 --
 
 INSERT INTO `utilisateurs` (`id_user`, `login`, `mot_de_passe`) VALUES
-(1, 'test', '12'),
-(2, 'erin', '123'),
-(3, 'neo', '123');
+(1, 'erin', '$2y$10$NFklpKkwpDeHaGWAov9NqukVkq5wHVEV2y7a.MqKL4bnXpwKPLxNy'),
+(2, 'neo', '$2y$10$3MhnMHGJpYccmhQDLUVHtOJFSjUpx77ujM6kMqXfycWjINYNx4OBG'),
+(3, 'test', '$2y$10$i08BlA9eUW.OCJgh6lyQvuovkNqDi3BrFb11BtErSj13QyGTB921i'),
+(9, 'toto', '$2y$10$4FxM7lwnryzdBpLl7EtT..O7TwV78RQJHTSgS0GFvL9ZE.dT/YyAq');
 
 --
 -- Index pour les tables déchargées
@@ -131,7 +133,7 @@ ALTER TABLE `commentaires`
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

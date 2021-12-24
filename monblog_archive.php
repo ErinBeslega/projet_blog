@@ -40,7 +40,7 @@
       };
 
        // Si je suis admin tata
-       if (isset($_SESSION) && $_SESSION['login'] == "tata"){
+       if (isset($_SESSION) && $_SESSION['login'] == "toto"){
           echo "<a href='createur.php'>Createur</a><br>";
       };
 ?>
