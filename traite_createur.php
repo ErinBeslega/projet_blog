@@ -9,10 +9,11 @@
 <body>
 <?php
 // Envoyer un nouvel article dans la bdd
+    $titre_b=$_POST["titre_b"];
     $contenu_b=$_POST["contenu_b"];
     include("connexion.php");
     $date_b=$_POST["date_b"];
-    $sql= "INSERT INTO billets (contenu_b, date_b) VALUES ('$contenu_b', '$date_b')";
+    $sql= "INSERT INTO `billets` (`id_billet`, `date_b`, `contenu_b`, `titre_b`) VALUES (NULL, '$date_b', '$contenu_b', '$titre_b')";
     $db->query($sql);
     header('Location: createur.php');
     ?>

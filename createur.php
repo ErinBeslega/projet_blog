@@ -10,7 +10,7 @@
 
 <body>
 
-<header>
+    <header>
         <?php
        session_start();
        // Se déconnecter
@@ -48,12 +48,15 @@
     </main>
 
     <form method="POST" action="traite_createur.php">
-    <h1>Ajouter un article</h1>
+        <h1>Ajouter un article</h1>
+        <label for="titre_b">Titre de votre article :</label>
+        <input type="text" name="titre_b" id="titre_b" placeholder="Titre"><br>
         <label for="contenu_b">Contenu de l'article :</label>
-        <input type="text" name="contenu_b" id="" placeholder="Ecrit un nouvel article !" cols="30" rows="8">
+        <textarea name='contenu_b' id='contenu_b' cols='30' rows='8' placeholder="Exprimez-vous"></textarea><br>
         <label for="date_b">Date :</label>
-        <input type="date" name="date_b" id="">
+        <input type="date" name="date_b" id=""><br>
         <input type="submit" value="Ajouter l'article">
     </form>
 </body>
+
 </html>

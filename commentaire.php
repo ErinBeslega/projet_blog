@@ -13,8 +13,7 @@
     ?>
     <form method="POST" action="traite_commentaire.php">
     <h1>Ajoute ton commentaire</h1>
-        <input type="text" name="login" id="" placeholder="Login">
-        <input type="date" name="date" id="" placeholder="Date">
+        <input type="date" name="date" id="" placeholder="Date" required="required">
         <input type="text" name="com" id="" placeholder="Exprime toi !">
         <input class="connect" type="submit" value="Ajouter">
     </form>

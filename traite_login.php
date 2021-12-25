@@ -10,11 +10,12 @@
 
 <?php 
     require "connexion.php";
+    // session_start();
 
     $login=$_POST["login"];
     $password=$_POST["password"];
 
-    $requete="SELECT `login`,`mot_de_passe` FROM `utilisateurs` WHERE `login`='$login'";
+    $requete="SELECT * FROM `utilisateurs` WHERE `login`='$login'";
     
     // $stmt=$db->prepare($requete);
     // $stmt->bindParam(':login',$_POST["login"], PDO::PARAM_STR);
@@ -32,6 +33,7 @@
         if (password_verify($password,$data_verif["mot_de_passe"])){
             session_start();
             $_SESSION["login"]=$data_verif["login"];
+            $_SESSION["id_user"]=$data_verif["id_user"];
             echo "<script>alert(\"Vous êtes connecté\")</script>";
             header('Location: monblog.php'); //page d'acceuil du blog pour l'utilisateur
         }else{

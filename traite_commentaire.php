@@ -12,13 +12,14 @@
     include("connexion.php");
     $date_c=$_POST["date"];
     $contenu_c=$_POST["contenu"];
-    $id_billet= $_SESSION["id_billet"];
-    $login_user = $_SESSION["ex_utilisateurs"];
-    $sql = "INSERT INTO `commentaires` (`id_commentaire`, `date_c`, `contenu_c`, `ex_billets`, `ex_utilisateurs`) VALUES (NULL, '$date_c', '$contenu_c', '$id_billet', '$login_user')";
+    $id_billet= $_POST["id_billet"];
+    $id_user= $_POST["id_user"];
+    var_dump($id_billet);
+    var_dump($id_user);
+    $sql = "INSERT INTO `commentaires` (`id_commentaire`, `date_c`, `contenu_c`, `ex_billets`, `ex_utilisateurs`) VALUES (NULL, '$date_c', '$contenu_c', '$id_billet', '$id_user')";
+    var_dump($sql);
     $db->query($sql);
-    // header("Location: articletest.php?
-    // le header ne marche pas
-    header("Location: login.php");
+    header("Location: articletest.php?id_billet=".$id_billet."");
     ?>
 </body>
 </html>
