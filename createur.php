@@ -35,7 +35,7 @@
           <a href='login.php'>Connexion</a>";
       };
 
-       // Si je suis admin toto
+       // Si je suis super utilisateur toto
        if (isset($_SESSION) && $_SESSION['login'] == "toto"){
           echo "<a href='createur.php'>Createur</a><br>";
       };

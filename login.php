@@ -10,20 +10,26 @@
 </head>
 
 <body>
-
+    <!-- Connexion à notre base de donné dans un fichier isolé pour plus de sécurité -->
     <?php
         require "connexion.php";
     ?>
-    
+
+    <!-- Super utilisateur :
+        login : toto
+        pswd : toto01
+        
+        Utilisateurs 
+        login : neo ou erin 
+        pswd : 123 -->
     <form method="POST" action="traite_login.php">
-    <h1>Connectez-vous</h1>
+        <h1>Connectez-vous</h1>
         <label for="login">
             <input type="text" name="login" placeholder="Login" required="required">
         </label>
-        
-        <?php   // isset = is set ?   
-                //!isset = est ce que la valeur n'existe pas ?
-                // && = et
+
+        <!-- Si le login est incorrect msg d'erreur -->
+        <?php   
             if ((isset($_GET["erreur"])) && ($_GET["erreur"]=="login")){
                 echo "login incorrect";
             }
@@ -33,6 +39,7 @@
             <input type="password" name="password" placeholder="Mot de passe" required="required">
         </label>
 
+        <!-- Si le password est incorect msg d'erreur -->
         <?php
             if (isset($_POST["erreur"]) && $_POST["erreur"]=="password"){
                 echo "mot de passe incorrect";

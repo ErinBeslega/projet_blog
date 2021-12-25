@@ -10,12 +10,13 @@
 
 <body>
 
+    <!-- Connexion à notre base de donné dans un fichier isolé pour plus de sécurité -->
     <?php 
         require "connexion.php";
     ?>
 
     <header>
-    <?php
+        <?php
        session_start();
        // Se déconnecter
        if(isset($_POST['deconnexion'])){
@@ -39,38 +40,35 @@
           <a href='login.php'>Connexion</a>";
       };
 
-       // Si je suis admin tata
+       // Si je suis super utilisateur toto
        if (isset($_SESSION) && $_SESSION['login'] == "toto"){
           echo "<a href='createur.php'>Createur</a><br>";
       };
 ?>
     </header>
 
-    <!-- Articles -->
+    <!-- Afficher tous les articles et un bouton pour afficher seulement l'article et les commentaires-->
     <main id="billet">
         <h1>Bienvenu sur les archives !</h1>
     </main>
 
     <?php 
-
-    $requete="SELECT * FROM billets ORDER BY id_billet DESC ";
-
+    $requete="SELECT * FROM billets ORDER BY id_billet DESC";
     $stmt=$db->query($requete);
     $result=$stmt->fetchall(PDO::FETCH_ASSOC);
 
     foreach($result as $article){
-        echo "<div id='billet$compteur' class='billets''>
+        echo "<div class='billets''>
         <h1>Article n° ".$article["id_billet"]."</h1><h1>".$article["titre_b"]."</h1>
         <br>
         <p> Date de publication : ".$article["date_b"]."</p>
         <br>
         <p>".$article["contenu_b"]."</p>
         <br>
-        <a href='articletest.php?id_billet=".$article["id_billet"]."'>Le lien</a>
+        <a href='articletest.php?id_billet=".$article["id_billet"]."'>Afficher l'article</a>
         <div>";
     }  
 ?>
 
 </body>
-
 </html>

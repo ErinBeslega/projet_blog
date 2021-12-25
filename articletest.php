@@ -1,3 +1,4 @@
+<!-- Connexion à notre base de donné dans un fichier isolé pour plus de sécurité -->
 <?php
 require "connexion.php";
 ?>
@@ -50,7 +51,7 @@ require "connexion.php";
           <a href='login.php'>Connexion</a>";
       };
 
-       // Si je suis admin tata
+       // Si je suis super utilisateur toto
        if (isset($_SESSION) && $_SESSION['login'] == "toto"){
           echo "<a href='createur.php'>Createur</a><br>";
       };
@@ -58,7 +59,7 @@ require "connexion.php";
     </header>
 
     <?php
-    
+        // Afficher l'article cliqué par l'utilisateur 
         $id_billet = $_GET["id_billet"];
         $request = "SELECT * from billets WHERE id_billet=:id_billet";
         $requestCom = "SELECT * FROM commentaires, utilisateurs WHERE ex_billets=$id_billet AND ex_utilisateurs=id_user";
@@ -69,29 +70,26 @@ require "connexion.php";
         $stmtCom -> execute();
         //AFFICHER CONTENU DU BILLET
         $result=$stmt->fetch(PDO::FETCH_ASSOC);
-        // $resultCom=$stmtCom->fetch(PDO::FETCH_ASSOC);
 
         echo "<h1>Article n°{$id_billet}</h1>
               <h1>{$result["titre_b"]}</h1>
               <p>{$result["contenu_b"]}</p>";
 
-
-
+        // Afficher les commentaires déjà postés
         echo "<h3>Commentaires :</h3><ul class='commentaire'>";
         while ($resultCom=$stmtCom->fetch(PDO::FETCH_ASSOC)) {
-            // $_SESSION["id_user"]=$resultCom["id_user"];
                 echo "<li>Date du commentaire : ".$resultCom["date_c"]."<br>
                 <div>".$resultCom["contenu_c"]."</div>
                 Auteur : ".$resultCom["login"]."
                 </li>";      
         };
-
         echo "</ul>";
             
-            // Poster un commentaire si je suis connecté 
+            //    Si je suis connecté, afficher le bouton pour poster un commentaire 
             if (isset($_SESSION["login"])){
                 $_SESSION["id_billet"] = $result["id_billet"];
                 echo "<button id='nouv_com'>Ajouter un commmentaire</button>";
+                 // Poster un commentaire si je suis connecté 
                 echo "<form action='traite_commentaire.php' method='POST' id='com'>
                     <strong>Ajouter un commentaire</strong><br>
                     <br><br>
@@ -105,10 +103,9 @@ require "connexion.php";
                     <button type='submit'>Ajouter un commentaire </button>
                 </form>";
             };
-        
-
 ?>
 
+    <!-- Cacher ou montrer le formulaire des commentaires au clic -->
     <script>
         document.getElementById('com').style.display = 'none';
 
